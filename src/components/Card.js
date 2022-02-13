@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useLazyQuery } from '@apollo/client';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Card() {
@@ -9,7 +9,7 @@ export default function Card() {
   //access the slugs in the pathname
   const urlSlug = location.pathname.split('/')[2];
 
-  // split the string into an array
+  // split the string into an array of strings
   const urlSlugArr = urlSlug.split(',');
 
   //create dynamic query which reads from pathname
@@ -22,13 +22,9 @@ export default function Card() {
     }
   `;
 
-  //make GQL query with dynamic variable
-  const { loading, error, data } = useQuery(PICTUREURL, {
+  const [getPictureUrl, { loading, data }] = useLazyQuery(PICTUREURL, {
     variables: { urlSlugArr },
   });
-
-  if (loading) return <p>Loading</p>;
-  if (error) return <p>Error</p>;
 
   return (
     <>
@@ -39,21 +35,72 @@ export default function Card() {
           Card images fetched from the URL slug in the address bar.
         </p>
 
-        <section style={{ display: 'flex' }}>
-          {data.cards.map((card, ind) => (
-            <div key={ind}>
-              <img
-                style={{ width: '220px', margin: '8px' }}
-                src={card.pictureUrl}
-                alt="card"
-              />
-              <p className="small">{card.name}</p>
+        <section
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {data ? (
+            <div className="wrapper" style={{ display: 'flex' }}>
+              {data.cards.map((card, ind) => (
+                <div style={{ height: '400px' }} key={ind}>
+                  <img
+                    style={{ width: '220px', margin: '8px' }}
+                    src={card.pictureUrl}
+                    alt="card"
+                  />
+                  <p className="small">{card.name}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            
+              <div className="wrapper" style={{ display: 'flex' }}>
+                {urlSlugArr.map((card, ind) => (
+                  <div style={{ height: '400px' }} key={ind}>
+                    <div
+                      style={{
+                        width: '220px',
+                        height: '356px',
+                        margin: '8px',
+                        background: 'navy',
+                        borderRadius: '8px',
+                        display: 'grid',
+                        placeItems: 'center',
+                        color: 'deepskyblue',
+                      }}
+                      alt="card"
+                    >
+                      <p>Click Below to Reveal</p>
+                    </div>
+                    <p className="small">{card.name}</p>
+                  </div>
+                ))}
+              </div>
+          )}
         </section>
-        <Link style={{ margin: '32px' }} to="/">
-          <button>Go Home</button>
-        </Link>
+
+        <div className="buttonGroup">
+          <button
+            disabled={data ? true : false}
+            style={{
+              cursor: data ? 'not-allowed' : 'pointer',
+              color: data ? 'gray' : 'white',
+              border: data ? '1px solid gray' : '1px solid white',
+            }}
+
+            // run GQL query on click
+            onClick={() => getPictureUrl()}
+          >
+            Reveal Cards
+          </button>
+
+          <Link style={{ margin: '32px' }} to="/">
+            <button>Go Home</button>
+          </Link>
+        </div>
       </main>
     </>
   );

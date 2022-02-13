@@ -14,7 +14,7 @@ function Home() {
         </p>
 
         <Link
-          style={{ margin: '48px' }}
+          style={{ margin: '32px' }}
           to="/cards/marco-verratti-2021-unique-1,marco-verratti-2021-rare-1,marco-verratti-2021-rare-2"
         >
           <button>Go to Marco Verratti cards page</button>

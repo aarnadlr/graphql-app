@@ -1,9 +1,13 @@
+html,
+body {
+  height: 100%;
+  background: linear-gradient(180deg, #0d0c11, #0707ff);
+}
+
 .container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, #0d0c11, #0707ff);
   color: white;
 }
 
@@ -20,6 +24,7 @@ button {
   border-radius: 8px;
   color: white;
   cursor: pointer;
+  max-width: 280px;
 }
 
 .small {
@@ -27,4 +32,8 @@ button {
   font-size: 0.8rem;
   max-width: 220px;
   margin: 0 auto;
+}
+
+.buttonGroup {
+  margin: 24px 0 0 0;
 }
