@@ -35,11 +35,6 @@ export default function Card() {
       <main className="container">
         <h1>Card Page</h1>
 
-        {console.log('urlSlug:', urlSlug)}
-        {console.log('urlSlugArr:', urlSlugArr)}
-        {console.log('data:', data)}
-        {console.log('data.cards:', data.cards)}
-
         <p style={{ color: 'white', margin: '8px 0 32px 0', fontWeight: 400 }}>
           Card images fetched from the URL slug in the address bar.
         </p>
