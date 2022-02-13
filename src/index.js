@@ -3,54 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { BrowserRouter } from 'react-router-dom';
 
+//set up backend proxy
 const client = new ApolloClient({
-  // uri: 'https://48p1r2roz4.sse.codesandbox.io',
-  // uri: 'https://api.sorare.com/graphql',
   uri: 'http://localhost:3000/graphql',
   cache: new InMemoryCache(),
 });
 
-client
-.query({
-  query: gql`
-    # query GetRates {
-    #   rates(currency:"USD"){
-    #     currency
-    #   }
-    # }
-    query {
-      card(slug:"marco-verratti-2021-unique-1"){
-        # grade
-        pictureUrl
-      }
-    }
-  `
-})
-.then(result=> console.log({result}));
-
-// const EXCHANGE_RATES = `
-//   query GetExchangeRates {
-//     rates(currency:"USD"){
-//       currency
-//       rate
-//     }
-//   }
-// `;
-
-
-
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,56 +1,35 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import {
-  // ApolloClient,
-  // InMemoryCache,
-  // ApolloProvider,
-  useQuery,
-  gql,
-} from '@apollo/client';
+import { Routes, Route, Link } from 'react-router-dom';
+import Card from './components/Card';
 
-
-const PICTUREURL = gql`
-  query {
-    card(slug:"marco-verratti-2021-unique-1"){
-      pictureUrl
-    }
-  }
-  
-`
-function Card() {
-  const { loading, error, data } = useQuery(PICTUREURL);
-
-  if (loading) return <p>Loading</p>;
-  if (error) return <p>Error</p>;
-
+function Home() {
   return (
     <>
-    <div>hi</div>
-    <img src={data.card.pictureUrl} alt="card" />
+      <main className="container">
+        <h1>Sorare Homepage</h1>
+
+        <p style={{ color: 'white', margin: '8px 0 32px 0', fontWeight: 400 }}>
+          Click below to visit the Marco Verratti card page
+        </p>
+
+        <Link
+          style={{ margin: '48px' }}
+          to="/cards/marco-verratti-2021-unique-1"
+        >
+          <button>Go to Marco Verratti card page</button>
+        </Link>
+      </main>
     </>
   );
 }
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <Card/>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/cards/:slug" element={<Card />} />
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }
 
