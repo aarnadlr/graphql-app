@@ -43,7 +43,7 @@ export default function Card() {
           }}
         >
           {data ? (
-            <div className="wrapper" style={{ display: 'flex' }}>
+            <div className="wrapper fade-in-image" style={{ display: 'flex' }}>
               {data.cards.map((card, ind) => (
                 <div style={{ height: '400px' }} key={ind}>
                   <img
@@ -56,7 +56,6 @@ export default function Card() {
               ))}
             </div>
           ) : (
-            
               <div className="wrapper" style={{ display: 'flex' }}>
                 {urlSlugArr.map((card, ind) => (
                   <div style={{ height: '400px' }} key={ind}>
