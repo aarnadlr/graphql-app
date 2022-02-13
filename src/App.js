@@ -10,14 +10,14 @@ function Home() {
         <h1>Sorare Homepage</h1>
 
         <p style={{ color: 'white', margin: '8px 0 32px 0', fontWeight: 400 }}>
-          Click below to visit the Marco Verratti card page
+          Click below to visit the Marco Verratti cards page
         </p>
 
         <Link
           style={{ margin: '48px' }}
-          to="/cards/marco-verratti-2021-unique-1"
+          to="/cards/marco-verratti-2021-unique-1,marco-verratti-2021-rare-1,marco-verratti-2021-rare-2"
         >
-          <button>Go to Marco Verratti card page</button>
+          <button>Go to Marco Verratti cards page</button>
         </Link>
       </main>
     </>

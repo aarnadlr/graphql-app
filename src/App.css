@@ -21,3 +21,10 @@ button {
   color: white;
   cursor: pointer;
 }
+
+.small {
+  text-align: center;
+  font-size: 0.8rem;
+  max-width: 220px;
+  margin: 0 auto;
+}
