@@ -1,6 +1,10 @@
 import React from 'react';
 import { useQuery, gql, useLazyQuery } from '@apollo/client';
 import { Link, useLocation } from 'react-router-dom';
+import {
+  useSpring,
+  animated,
+} from 'react-spring';
 
 export default function Card() {
   //access location object
@@ -26,6 +30,19 @@ export default function Card() {
     variables: { urlSlugArr },
   });
 
+  const propsFadeIn = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 2000,
+    config: {duration: 1000},
+  });
+  const propsFadeOut = useSpring({
+    from: { opacity: 1 },
+    to: { opacity: 0 },
+    delay: 2000,
+    config: {duration: 1000},
+  });
+
   return (
     <>
       <main className="container">
@@ -42,21 +59,27 @@ export default function Card() {
             alignItems: 'center',
           }}
         >
-          {data ? (
-            <div className="wrapper fade-in-image" style={{ display: 'flex' }}>
-              {data.cards.map((card, ind) => (
-                <div style={{ height: '400px' }} key={ind}>
-                  <img
-                    style={{ width: '220px', margin: '8px' }}
-                    src={card.pictureUrl}
-                    alt="card"
-                  />
-                  <p className="small">{card.name}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
+          {data?.cards ? (
+            <animated.div style={propsFadeIn}>
               <div className="wrapper" style={{ display: 'flex' }}>
+                {data.cards.map((card, ind) => (
+                  <div style={{ height: '400px' }} key={ind}>
+                    <img
+                      style={{ width: '220px', margin: '8px' }}
+                      src={card.pictureUrl}
+                      alt="card"
+                    />
+                    <p className="small">{card.name}</p>
+                  </div>
+                ))}
+              </div>
+            </animated.div>
+          ) : (
+            <animated.div style={data?propsFadeOut:null}>
+              <div
+                className={'wrapper'}
+                style={{ display: 'flex' }}
+              >
                 {urlSlugArr.map((card, ind) => (
                   <div style={{ height: '400px' }} key={ind}>
                     <div
@@ -78,6 +101,7 @@ export default function Card() {
                   </div>
                 ))}
               </div>
+            </animated.div>
           )}
         </section>
 
@@ -89,9 +113,10 @@ export default function Card() {
               color: data ? 'gray' : 'white',
               border: data ? '1px solid gray' : '1px solid white',
             }}
-
             // run GQL query on click
-            onClick={() => getPictureUrl()}
+            onClick={() => {
+              getPictureUrl();
+            }}
           >
             Reveal Cards
           </button>
